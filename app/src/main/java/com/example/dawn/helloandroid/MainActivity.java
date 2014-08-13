@@ -16,7 +16,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         WebView webView = (WebView)findViewById(R.id.webView);
+        // limit link click in webView
         webView.setWebViewClient(new WebViewClientOverrider());
+        // other guys has done some great work, so we can just open the url.
         webView.loadUrl("https://d2518dpi0ehrmy.cloudfront.net/");
     }
 

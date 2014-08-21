@@ -1,11 +1,24 @@
 package com.example.dawn.helloandroid;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+import java.util.logging.Level;
 
 
 public class MainActivity extends Activity {
@@ -15,11 +28,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WebView webView = (WebView)findViewById(R.id.webView);
+        final WebView webView = (WebView)findViewById(R.id.webView);
+        webView.getSettings().setJavaScriptEnabled(true);
+
         // limit link click in webView
         webView.setWebViewClient(new WebViewClientOverrider());
+
         // other guys has done some great work, so we can just open the url.
-        webView.loadUrl("https://d2518dpi0ehrmy.cloudfront.net/");
+        webView.loadUrl(Repository.getInstance().getBASIC_URL());
     }
 
 
@@ -42,12 +58,17 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class WebViewClientOverrider extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        final WebView webView = (WebView)findViewById(R.id.webView);
+        // Check if the key event was the Back button and if there's history
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+            webView.goBack();
             return true;
         }
+        // If it wasn't the Back key or there's no web page history, bubble up to the default
+        // system behavior (probably exit the activity)
+        return super.onKeyDown(keyCode, event);
     }
 
 }

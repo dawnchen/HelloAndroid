@@ -1,24 +1,11 @@
 package com.example.dawn.helloandroid;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
-import java.util.logging.Level;
 
 
 public class MainActivity extends Activity {
@@ -35,7 +22,7 @@ public class MainActivity extends Activity {
         webView.setWebViewClient(new WebViewClientOverrider());
 
         // other guys has done some great work, so we can just open the url.
-        webView.loadUrl(Repository.getInstance().getBASIC_URL());
+        webView.loadUrl(MyFactory.getInstance().getBASIC_URL());
     }
 
 

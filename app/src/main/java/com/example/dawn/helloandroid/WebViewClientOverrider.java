@@ -25,12 +25,11 @@ public class WebViewClientOverrider extends WebViewClient {
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
         Log.d("info-Incercept", url);
 
-        Repository repository = Repository.getInstance();
-        OkHttpClient client = repository.getHttpClient();
+        MyFactory myFactory = MyFactory.getInstance();
+        OkHttpClient client = myFactory.getHttpClient();
 
         // currently we only intercept request from our site
-        if (url.contains(repository.getBASIC_HOST())){
-            //if (Util.isPlainTextUrl(url)) {
+        if (url.contains(myFactory.getBASIC_HOST())){
                 Log.d("info-handled", url);
                 try {
                     Request request = new Request.Builder()
@@ -46,22 +45,10 @@ public class WebViewClientOverrider extends WebViewClient {
                     if (headerContentType.contains(";")) {
                         String[] typeArray = headerContentType.split(";");
                         mimeType = typeArray[0];
-
                     }
                     else {
                         mimeType = headerContentType;
                     }
-
-                    // if server doesn't send mimeType correctly, we do some check on url
-                    // but there is a lot of mimeTypes and we are not write a browser!
-                    if (Util.isUrlContainsImagePostfix(url))
-                        mimeType = "image/" + url.substring(url.lastIndexOf(".") + 1);
-
-                    if (Util.isUrlContainsJs(url))
-                        mimeType = "text/css";
-
-                    if (Util.isUrlContainsJs(url))
-                        mimeType = "text/javascript";
 
                     Log.d("info-mimeType", mimeType);
                     Log.d("info-encoding", encoding);
@@ -75,8 +62,8 @@ public class WebViewClientOverrider extends WebViewClient {
                         msg = "Unknown Error!";
                     Log.e("Error", msg);
                 }
-            //}
         }
+
         return super.shouldInterceptRequest(view, url);
     }
 }

@@ -1,15 +1,11 @@
 package com.example.dawn.helloandroid;
 
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
 
 /**
  * Created by Dawn on 2014/8/20.
  */
-public class Repository {
+public class MyFactory {
     // This host for all
     private final String BASIC_HOST = "d2518dpi0ehrmy.cloudfront.net";
 
@@ -33,12 +29,12 @@ public class Repository {
     }
 
     // only all one instance
-    private Repository(){
+    private MyFactory(){
     }
 
-    private static final Repository instance = new Repository();
+    private static final MyFactory instance = new MyFactory();
 
-    public static final Repository getInstance(){
+    public static final MyFactory getInstance(){
         return instance;
     }
 }

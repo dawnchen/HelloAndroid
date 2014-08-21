@@ -22,8 +22,6 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
-import junit.framework.Assert;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -133,7 +131,7 @@ public class MiscTest extends InstrumentationTestCase {
                     Log.d("info", host);
                     if (host == null)
                         throw new UnknownHostException();
-                    if (host.equals(Repository.getInstance().getBASIC_HOST()))
+                    if (host.equals(MyFactory.getInstance().getBASIC_HOST()))
                         return new InetAddress[]{
                                 InetAddress.getByAddress(new byte[]{(byte)192, (byte)168, (byte)3, (byte)1}),
                                 InetAddress.getByAddress(new byte[]{(byte)192, (byte)168, (byte)5, (byte)1}),
